@@ -21,3 +21,4 @@ Category is the specific section under the NPC tab that the nextbot will appear 
 8. Open command prompt, type ffmpeg to confirm it works
 9. If it says ffmpeg not found restart your PC
 10. If it still doesn't work find a tutorial online how to install FFmpeg
+## Nextbot Tutorial
