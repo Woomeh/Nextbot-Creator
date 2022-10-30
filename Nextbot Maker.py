@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
+import webbrowser
 import shutil
 import os
 from pydub import AudioSegment as aus
 # Create the GUI
-layout = [[sg.Text("Nextbot Name", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-NAME-")],
+layout = [[sg.Text("Nextbot Name", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-NAME-", enable_events=True)],
           [sg.Text("Category        ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-CAT-")],
           [sg.Text("Addon Folder ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-ADDON-"), sg.FolderBrowse(target="-ADDON-")],
           [sg.Text("Chase Sound ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-CHASE-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-CHASE-")],
@@ -12,7 +13,7 @@ layout = [[sg.Text("Nextbot Name", font=("TkFixedFont", 10, 'bold')),sg.Input(ke
           [sg.Text("Nextbot PNG ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-PNG-"), sg.FileBrowse(file_types=(("PNG Files", "*.png"),), target="-PNG-")],
           [sg.Text("Nextbot VTF ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-VTF-"), sg.FileBrowse(file_types=(("VTF Files", "*.vtf"),), target="-VTF-")],
           [sg.Checkbox("Admin Only",font=("TkFixedFont", 10, 'bold'), default=True, key="-ADM-")], 
-          [sg.Button("Create")]]
+          [sg.Button("Create"), sg.Button("Tutorial")]]
 
 window = sg.Window('Nextbot Maker', layout, size=(600,350))
 #Create Folders
@@ -106,8 +107,12 @@ while True:
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
         break
+    if event == "-NAME-" and values["-NAME-"] and values["-NAME-"][-1] not in ('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._'):
+        window["-NAME-"].update(values["-NAME-"][:-1])
+    elif event == "Tutorial":
+        webbrowser.open("https:/youtube.com")
     elif event == "Create":
-        NEName = values["-NAME-"].lower()
+        NEName = values["-NAME-"].lower().replace(' ', '_')
         mkFolders()
         for i in range(len(Dir)):
             try:
@@ -118,4 +123,5 @@ while True:
         mvSoundFiles()
         mvMaterials()
         mkLua()
+print("Done")
 window.close()
