@@ -12,7 +12,7 @@ Category is the specific section under the NPC tab that the nextbot will appear 
 6. Install VTFEdit by running vtfedit133.exe 
 7. Install FFmpeg
 ## FFmpeg Guide
-1. Extract FFmpeg.7z to a folder called "FFmpeg"
+1. Extract FFmpeg.7z to a folder called "FFmpeg" (Might require 7-zip)
 2. Copy the FFmpeg folder to your C:\ drive
 3. Search System Variables in the Windows Search Box
 4. Open "Edit the system environment variables"
