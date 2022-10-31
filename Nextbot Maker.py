@@ -107,7 +107,7 @@ while True:
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
         break
-    if event == "-NAME-" and values["-NAME-"] and values["-NAME-"][-1] not in ('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._'):
+    if event == "-NAME-" and values["-NAME-"] and values["-NAME-"][-1] not in ('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._ '):
         window["-NAME-"].update(values["-NAME-"][:-1])
     elif event == "Tutorial":
         webbrowser.open("https:/youtube.com")
