@@ -32,6 +32,6 @@ Category is the specific section under the NPC tab that the nextbot will appear 
 7. Make sure maximum width and height are the same
 8. Press file, click save as, save the file as anything you want to call it
 9. Run Nextbot Maker.py
-10. Choose everything you want (name can only be alphanumeric and _)
+10. Choose everything you want (a-z, A-Z, +.)
 11. Press create
 12. Everything is complete!
