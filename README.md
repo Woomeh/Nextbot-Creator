@@ -1,6 +1,8 @@
  # Nextbot Creator For Garry's Mod
  Makes a GUI so anyone can make a Nextbot on Garry's Mod
- ![Nextbot_creator](https://user-images.githubusercontent.com/91213927/198895618-11b907f1-d3bf-41da-b726-815ca404d9e8.png)
+ 
+![Readme Image](https://user-images.githubusercontent.com/91213927/199777953-b9b31530-5200-41e0-8f50-7eabdf034a01.png)
+
 
 Category is the specific section under the NPC tab that the nextbot will appear in.
 ## Setup Guide
