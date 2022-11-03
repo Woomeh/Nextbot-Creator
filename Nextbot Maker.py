@@ -1,21 +1,39 @@
+import io
 import PySimpleGUI as sg
 import webbrowser
 import shutil
 import os
 from pydub import AudioSegment as aus
+from PIL import Image
 # Create the GUI
-layout = [[sg.Text("Nextbot Name", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-NAME-", enable_events=True)],
-          [sg.Text("Category        ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-CAT-")],
-          [sg.Text("Addon Folder ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-ADDON-"), sg.FolderBrowse(target="-ADDON-")],
-          [sg.Text("Chase Sound ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-CHASE-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-CHASE-")],
-          [sg.Text("Death Sound ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-DEATH-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-DEATH-")],
-          [sg.Text("Jump Sound  ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-JUMP-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-JUMP-")],
-          [sg.Text("Nextbot PNG ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-PNG-"), sg.FileBrowse(file_types=(("PNG Files", "*.png"),), target="-PNG-")],
-          [sg.Text("Nextbot VTF ", font=("TkFixedFont", 10, 'bold')),sg.Input(key="-VTF-"), sg.FileBrowse(file_types=(("VTF Files", "*.vtf"),), target="-VTF-")],
-          [sg.Checkbox("Admin Only",font=("TkFixedFont", 10, 'bold'), default=True, key="-ADM-")], 
-          [sg.Button("Create"), sg.Button("Tutorial")]]
+first_column = [[sg.Text("Nextbot Name", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Category", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Speed", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Addon Folder", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Chase Sound", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Death Sound", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Jump Sound", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Nextbot PNG", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Text("Nextbot VTF", font=("TkFixedFont", 10, 'bold'))],
+                [sg.Checkbox("Admin Only",font=("TkFixedFont", 10, 'bold'), default=True, key="-ADM-")], 
+                [sg.Button("Create"), sg.Button("Tutorial")]]
 
-window = sg.Window('Nextbot Maker', layout, size=(600,350))
+second_column = [[sg.Input(key="-NAME-", enable_events=True)],
+                 [sg.Input(key="-CAT-")],
+                 [sg.Input(key="-SPD-"), sg.Text("500->default")],
+                 [sg.Input(key="-ADDON-"), sg.FolderBrowse(target="-ADDON-", pad=(0,0))],
+                 [sg.Input(key="-CHASE-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-CHASE-", pad=(0,0))],
+                 [sg.Input(key="-DEATH-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-DEATH-", pad=(0,0))],
+                 [sg.Input(key="-JUMP-"), sg.FileBrowse(file_types=(("MP3 Files", "*.mp3"),), target="-JUMP-", pad=(0,0))],
+                 [sg.Input(key="-PNG-", enable_events=True), sg.FileBrowse(file_types=(("PNG Files", "*.png"),), target="-PNG-", pad=(0,0))],
+                 [sg.Input(key="-VTF-"), sg.FileBrowse(file_types=(("VTF Files", "*.vtf"),), target="-VTF-", pad=(0,0))]]
+
+layout = [[sg.Column(first_column, vertical_alignment='t'),
+           sg.Column(second_column, vertical_alignment='t'),
+           sg.VSeperator(),
+           sg.Image(key="-IMAGE-")]]
+
+window = sg.Window('Nextbot Maker', layout, size=(1000,350))
 #Create Folders
 def mkFolders():
     global npc; global luaFolder; global luaEntitiesFolder; global materialsFolder
@@ -94,7 +112,7 @@ def mkLua():
     luaF = open('nextbot_code.txt', 'r')
     luaFD = luaF.read()
     luaF.close()
-    luaND = luaFD.replace("Name = \"smiley\"", "Name = \""+values["-NAME-"]+"\"").replace('smiley', NEName).replace('NextbotMaker', values["-CAT-"])
+    luaND = luaFD.replace("Name = \"smiley\"", "Name = \""+values["-NAME-"]+"\"").replace('smiley', NEName).replace('Speed(500)', 'Speed('+values["-SPD-"]+')').replace('tion(500)', 'tion('+values["-SPD-"]+')')
     if values["-ADM-"] == False:
         luaND = luaND.replace('AdminOnly = true', 'AdminOnly = false')
     luaF = open('nextbot_code.txt', 'w')
@@ -109,6 +127,14 @@ while True:
         break
     if event == "-NAME-" and values["-NAME-"] and values["-NAME-"][-1] not in ('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._ '):
         window["-NAME-"].update(values["-NAME-"][:-1])
+    if event == "-PNG-":
+        if os.path.exists(values["-PNG-"]):
+            image = Image.open(values["-PNG-"])
+            image.thumbnail((400,400))
+            image = image.resize((300, 300), resample=0)
+            bio = io.BytesIO()
+            image.save(bio, format="PNG")
+            window["-IMAGE-"].update(data=bio.getvalue())
     elif event == "Tutorial":
         webbrowser.open("https:/youtube.com")
     elif event == "Create":
@@ -123,5 +149,5 @@ while True:
         mvSoundFiles()
         mvMaterials()
         mkLua()
-print("Done")
+        print("Done")
 window.close()

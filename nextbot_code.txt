@@ -7,12 +7,9 @@ ENT.PhysgunDisabled = true
 ENT.AutomaticFrameAdvance = false
 
 ENT.JumpSound = Sound("npc_smiley/jump.mp3")
-ENT.JumpHighSound = Sound("npc_smiley/spring.mp3")
+ENT.JumpHighSound = Sound("npc_smiley/jump.mp3")
 ENT.TauntSounds = {
-	Sound("npc_smiley/pieceofcake.mp3"),
-	Sound("npc_smiley/stepitup.mp3"),
-	Sound("npc_smiley/tooeasy.mp3"),
-	Sound("npc_smiley/tooslow.mp3"),
+	Sound("npc_smiley/pieceofcake.mp3")
 }
 local chaseMusic = Sound("npc_smiley/panic.mp3")
 
@@ -23,7 +20,7 @@ local IsValid = IsValid
 if SERVER then -- SERVER --
 
 local npc_smiley_acquire_distance =
-	CreateConVar("npc_smiley_acquire_distance", 2500, FCVAR_NONE,
+	CreateConVar("npc_smiley_acquire_distance", 9999, FCVAR_NONE,
 	"The maximum distance at which smiley will chase a target.")
 
 local npc_smiley_spawn_protect =
@@ -399,7 +396,7 @@ function ENT:Initialize()
 	self.loco:SetDeathDropHeight(600)
 
 	-- In Sandbox, players are faster in singleplayer.
-	self.loco:SetDesiredSpeed(game.SinglePlayer() and 650 or 500)
+	self.loco:SetDesiredSpeed(500)
 
 	-- Take corners a bit sharp.
 	self.loco:SetAcceleration(500)
