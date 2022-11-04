@@ -112,7 +112,7 @@ def mkLua():
     luaF = open('nextbot_code.txt', 'r')
     luaFD = luaF.read()
     luaF.close()
-    luaND = luaFD.replace("Name = \"smiley\"", "Name = \""+values["-NAME-"]+"\"").replace('smiley', NEName).replace('Speed(500)', 'Speed('+values["-SPD-"]+')').replace('tion(500)', 'tion('+values["-SPD-"]+')')
+    luaND = luaFD.replace("Name = \"smiley\"", "Name = \""+values["-NAME-"]+"\"").replace('smiley', NEName).replace('Speed(500)', 'Speed('+values["-SPD-"]+')').replace('tion(500)', 'tion('+values["-SPD-"]+')').replace('NextbotMaker', values["-CAT-"])
     if values["-ADM-"] == False:
         luaND = luaND.replace('AdminOnly = true', 'AdminOnly = false')
     luaF = open('nextbot_code.txt', 'w')
